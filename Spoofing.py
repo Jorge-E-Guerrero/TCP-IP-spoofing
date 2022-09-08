@@ -15,14 +15,14 @@ else:
     for i, item in enumerate(hex_destination):
         #hex_destination[i] = str(hex(int(hex_destination[i])))
         hex_destination[i] = '0x{:02X}'.format(int(hex_destination[i]))
-        print(hex_destination[i] )
+        #print(hex_destination[i] )
 
-    ip_source = input('Ingresa la ip que quieres spoofear\n')
+    ip_source = input('Ingresa la ip desde la que quieres spoofear\n')
     hex_source = ip_destination.split('.')
     
     while len(hex_destination) != 4:
         print('ip no valida\n')
-        ip_source = input('Ingresa la ip que quieres spoofear\n')
+        ip_source = input('Ingresa la ip desde la que quieres spoofear\n')
         hex_source = ip_source.split('.')
     else:
         for i, item in enumerate(hex_source):
@@ -39,8 +39,9 @@ else:
         #nstr = bytes(nstr, encoding='utf-8')
         #print (nstr)
         print(hex_destination)
+        print(hex_source)
 
-        print(bytes([int(x,0) for x in hex_destination]))
+        #print(bytes([int(x,0) for x in hex_destination]))
 
         s = socket.socket(socket.AF_PACKET, socket.SOCK_RAW)
         s.bind(("wlp4s0", 0))
@@ -67,10 +68,27 @@ else:
         
         checksum_ip = int('0x0000',0) #0xffff = 65535
 
-        ip_byte_1 = '0x' + hex_ip_header_1[0].replace('0x','') + hex_ip_header_1[2].replace('0x','')
+        ip_byte_1 = '0x' + hex_ip_header_1[0].replace('0x','') + hex_ip_header_1[1].replace('0x','')
         ip_byte_2 = '0x' + hex_ip_header_1[2].replace('0x','') + hex_ip_header_1[3].replace('0x','')
+        ip_byte_3 = '0x' + hex_ip_header_2[0].replace('0x','') + hex_ip_header_2[1].replace('0x','')
+        ip_byte_4 = '0x' + hex_ip_header_2[2].replace('0x','') + hex_ip_header_2[3].replace('0x','')
+        ip_byte_5 = '0x' + hex_ip_header_3[0].replace('0x','') + hex_ip_header_3[1].replace('0x','')
+        ip_byte_6 = '0x' + hex_ip_header_3[2].replace('0x','') + hex_ip_header_3[3].replace('0x','')
+        ip_byte_7 = '0x' + hex_source[0].replace('0x','') + hex_source[1].replace('0x','')
+        ip_byte_8 = '0x' + hex_source[2].replace('0x','') + hex_source[3].replace('0x','')
+        ip_byte_9 = '0x' + hex_destination[0].replace('0x','') + hex_destination[1].replace('0x','')
+        ip_byte_10 = '0x' + hex_destination[2].replace('0x','') + hex_destination[3].replace('0x','')
+        
         checksum_ip += int(ip_byte_1,0)
         checksum_ip += int(ip_byte_2,0)
+        checksum_ip += int(ip_byte_3,0)
+        checksum_ip += int(ip_byte_4,0)
+        checksum_ip += int(ip_byte_5,0)
+        checksum_ip += int(ip_byte_6,0)
+        checksum_ip += int(ip_byte_7,0)
+        checksum_ip += int(ip_byte_8,0)
+        checksum_ip += int(ip_byte_9,0)
+        checksum_ip += int(ip_byte_10,0)
         #for x in hex_ip_header_1:
             #checksum_ip += int(x,0)
         print(checksum_ip)
