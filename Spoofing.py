@@ -96,7 +96,7 @@ else:
 
 
         checksum_ip = checksum_ip[2:]
-        print('Checksum: ' + str(checksum_ip) + '\n')
+        print('Checksum IP: ' + str(checksum_ip))
         checksum_ip_byte_1 = '0x' + checksum_ip[:2]
         checksum_ip_byte_2 = '0x' + checksum_ip[2:]
         
@@ -104,6 +104,7 @@ else:
         hex_ip_header_3[3] = checksum_ip_byte_2
 
         print(hex_ip_header_3)
+        print('\n')
 
         ip_header += bytes([int(x,0) for x in hex_ip_header_3])
         
@@ -147,6 +148,8 @@ else:
         checksum_tcp += int(ip_byte_10,0)
         checksum_tcp += int('0x1a',0) # Protocol 0x06 + TCP lenght 0x14 = 0x1a
 
+        print('\nSubtotal TCP: '+ str(checksum_tcp))
+
         while checksum_tcp > 65535:
             checksum_tcp = checksum_tcp - 65535
 
@@ -155,14 +158,14 @@ else:
         if len(checksum_tcp) < 6:
             checksum_tcp = '0x{:04X}'.format(int(checksum_tcp,16))
             checksum_tcp = str(checksum_tcp)
-            print(checksum_tcp)
+            #print(checksum_tcp)
         
         
         checksum_tcp = checksum_tcp[2:]
         #print(len(checksum_tcp))
         
 
-        print('Checksum TCP: ' + str(checksum_tcp) + '\n')
+        print('Checksum TCP: ' + str(checksum_tcp))
         checksum_tcp_byte_1 = '0x' + checksum_tcp[:2]
         checksum_tcp_byte_2 = '0x' + checksum_tcp[2:]
         
@@ -170,6 +173,7 @@ else:
         hex_tcp_header_3[1] = checksum_tcp_byte_2
 
         print(hex_tcp_header_3)
+        print('\n')
         
         
         tcp_header += bytes([int(x,0) for x in hex_tcp_header_3]) # Checksum | Urgent Pointer
