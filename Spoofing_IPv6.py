@@ -12,8 +12,7 @@ def validate_ipv6(arreglo):
         else:
             if int(x,16) > 65535:
                 validacion = False
-            print(int(x,16))
-
+            #print(int(x,16))
     return validacion
 
 #Input inicial de la ip de destino y se divide en un areglo cuando encuentra el "."
@@ -93,11 +92,11 @@ else:
         tcp_header += b'\x00\x00\x00\x00' # Sequence Number
         tcp_header += b'\x00\x00\x00\x00' # Acknowledgement Number | SYN Flag
 
-        hex_tcp_header_2 = ['0x50','0x02','0x71','0x10'] # Sequence Number        
-        tcp_header += b'\x50\x02\x71\x10' # Data Offset, Reserved, Flags | Window Size
+        hex_tcp_header_2 = ['0x50','0x02','0x71','0x10'] # Data Offset, Reserved, Flags | Window Size    
+        tcp_header += b'\x50\x02\x71\x10' 
         
 
-        hex_tcp_header_3 = ['0x00','0x00','0x00','0x00'] # Sequence Number
+        hex_tcp_header_3 = ['0x00','0x00','0x00','0x00'] # Checksum | Urgent Pointer
         
         
         #Se repite el proceso del checksum IP
@@ -168,7 +167,3 @@ else:
         packet = ethernet + ipv6_header + tcp_header
         #print(packet)
         s.send(packet)
-
-
-
-#0x0e4a 0xfe59

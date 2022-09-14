@@ -1,10 +1,14 @@
 import socket
+import string
 
 def validate_ip(arreglo):
     validacion = True
     for x in arreglo:
-        if int(x) >255:
+        if all(c in string.digits for c in x) == False:
             validacion = False
+        else:
+            if int(x) >255:
+                validacion = False
     return validacion
 
 
@@ -100,7 +104,7 @@ else:
         checksum_ip += int(ip_byte_10,0)
 
 
-        print('\nSubtotal: '+ str(checksum_ip))
+        print('\nSubtotal IP: '+ str(checksum_ip))
 
 
         #El checksum no puede superar los 2 Bytes por lo que luego de pasar el limite se reinicia el contador
